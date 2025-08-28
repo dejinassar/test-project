@@ -6,19 +6,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 18
+          cache: 'npm'
 
       # Backend
-      - run: |
-          cd backend
+      - name: Install & Test Backend
+        working-directory: ./backend
+        run: |
           npm ci
           npm test
 
       # Frontend
-      - run: |
-          cd frontend
+      - name: Install & Build Frontend
+        working-directory: ./frontend
+        run: |
           npm ci
           npm run build
